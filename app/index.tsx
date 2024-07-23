@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Text, View, StyleSheet, Image, useWindowDimensions, TouchableOpacity } from "react-native";
 import { Canvas, LinearGradient, Rect, vec } from "@shopify/react-native-skia";
-import { useDerivedValue, useSharedValue, withTiming, withRepeat } from "react-native-reanimated";
+import { useDerivedValue, useSharedValue, withTiming, withSequence, SharedValue } from "react-native-reanimated";
 import { StatusBar } from "expo-status-bar";
 import { getRandomColor } from "@/scripts/getRandomColor";
 
@@ -21,22 +21,19 @@ export default function index() {
   }, []);
 
   useEffect(() => {
-    // Function to create continuous color transitions
-    const createContinuousTransition = () => {
-      leftColor.value = withRepeat(
-        withTiming(getRandomColor(0), { duration: 3000 }),
-        -1,
-        true // Reverse on repeat
+    const createContinuousTransition = (colorSharedValue: SharedValue<string>) => {
+      const colorSequence = Array.from({ length: 100 }, getRandomColor);
+      const colorAnimations = colorSequence.map(color =>
+        withTiming(color, { duration: 1000 })
       );
-      rightColor.value = withRepeat(
-        withTiming(getRandomColor(0), { duration: 3000 }),
-        -1,
-        true // Reverse on repeat
-      );
+
+      colorSharedValue.value = withSequence(...colorAnimations);
     };
 
-    createContinuousTransition();
+    createContinuousTransition(leftColor);
+    createContinuousTransition(rightColor);
   }, [leftColor, rightColor]);
+
 
   return (
     <>

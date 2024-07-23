@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { Text, View, StyleSheet, Image, useWindowDimensions, TouchableOpacity } from "react-native";
 import { Canvas, LinearGradient, Rect, vec } from "@shopify/react-native-skia";
 import { useDerivedValue, useSharedValue, withTiming } from "react-native-reanimated";
@@ -7,12 +8,30 @@ import { getRandomColor } from "@/scripts/getRandomColor";
 export default function index() {
   const { width, height } = useWindowDimensions();
 
-  const leftColor = useSharedValue('red');
-  const rightColor = useSharedValue('blue');
+  const leftColor = useSharedValue('white');
+  // const middleColor = useSharedValue('red');
+  const rightColor = useSharedValue('black');
 
   const colors = useDerivedValue(() => {
-    return [leftColor.value, rightColor.value];
+    return [
+      leftColor.value, 
+      // middleColor.value, 
+      rightColor.value
+    ];
   }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      leftColor.value = withTiming(getRandomColor());
+      // middleColor.value = withTiming(getRandomColor());
+      rightColor.value = withTiming(getRandomColor());
+    }, 10); 
+
+    return () => clearInterval(interval);
+  }, [
+    leftColor, 
+    // middleColor, 
+    rightColor]);
 
   return (
     <>
@@ -25,14 +44,7 @@ export default function index() {
             colors={colors}
           />
         </Rect>
-      </Canvas>
-      <TouchableOpacity
-        style={styles.container}
-        onPress={() => {
-          leftColor.value = withTiming(getRandomColor());
-          rightColor.value = withTiming(getRandomColor());
-        }}>
-      </TouchableOpacity>    
+      </Canvas>   
     </>
   );
 };

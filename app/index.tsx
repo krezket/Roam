@@ -5,7 +5,9 @@ export default function index() {
   return (
     <LinearGradient
       style={styles.container}
-      colors={['gray', 'red', 'gray']}>
+      // colors={['gray', 'red', 'gray']}
+      colors={['#192f6a', '#3b5998', '#192f6a']}
+      >
       <Text>Welcome to</Text>
       <Image source={require("../assets/images/ROAM.png")} />
     </LinearGradient>

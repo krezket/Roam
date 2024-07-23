@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Text, View, StyleSheet, Image, useWindowDimensions, TouchableOpacity } from "react-native";
 import { Canvas, LinearGradient, Rect, vec } from "@shopify/react-native-skia";
-import { useDerivedValue, useSharedValue, withTiming } from "react-native-reanimated";
+import { useDerivedValue, useSharedValue, withTiming, withRepeat } from "react-native-reanimated";
 import { StatusBar } from "expo-status-bar";
 import { getRandomColor } from "@/scripts/getRandomColor";
 
@@ -21,17 +21,22 @@ export default function index() {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      leftColor.value = withTiming(getRandomColor());
-      // middleColor.value = withTiming(getRandomColor());
-      rightColor.value = withTiming(getRandomColor());
-    }, 10); 
+    // Function to create continuous color transitions
+    const createContinuousTransition = () => {
+      leftColor.value = withRepeat(
+        withTiming(getRandomColor(0), { duration: 3000 }),
+        -1,
+        true // Reverse on repeat
+      );
+      rightColor.value = withRepeat(
+        withTiming(getRandomColor(0), { duration: 3000 }),
+        -1,
+        true // Reverse on repeat
+      );
+    };
 
-    return () => clearInterval(interval);
-  }, [
-    leftColor, 
-    // middleColor, 
-    rightColor]);
+    createContinuousTransition();
+  }, [leftColor, rightColor]);
 
   return (
     <>

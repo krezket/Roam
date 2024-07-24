@@ -7,6 +7,7 @@ import { Canvas, LinearGradient, Rect, vec } from "@shopify/react-native-skia";
 import { useDerivedValue, useSharedValue, withTiming, withSequence, SharedValue } from "react-native-reanimated";
 import { StatusBar } from "expo-status-bar";
 import { getRandomColor } from "@/scripts/getRandomColor";
+import { useNavigation } from "@react-navigation/native";
 
 type FadeInViewProps = PropsWithChildren<{style: ViewStyle}>;
 
@@ -32,6 +33,7 @@ const FadeInView: React.FC<FadeInViewProps> = props => {
 };
 
 export default function index() {
+  const navigation = useNavigation();
   const { width, height } = useWindowDimensions();
   
   const leftColor = useSharedValue('red');
@@ -74,7 +76,7 @@ export default function index() {
       </FadeInView>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => {}}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('loginScreen')}>
           <Text style={styles.text}>Log In</Text>
         </TouchableOpacity>
 
@@ -110,10 +112,10 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     backgroundColor: 'gray',
+    borderRadius: 2,
     paddingTop: 5,
     paddingBottom: 5,
     paddingLeft: 90,
     paddingRight: 90,
-    borderRadius: 2,
   },
 });

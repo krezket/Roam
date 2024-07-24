@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { PropsWithChildren } from "react";
-import { Animated, Text, View, StyleSheet, Image, useWindowDimensions, TouchableOpacity, Platform } from "react-native";
+import { Animated, Text, View, StyleSheet, Image, useWindowDimensions, TouchableOpacity, Platform, Button } from "react-native";
 import { ViewStyle } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Canvas, LinearGradient, Rect, vec } from "@shopify/react-native-skia/src";
@@ -8,6 +8,12 @@ import { useDerivedValue, useSharedValue, withTiming, withSequence, SharedValue 
 import { StatusBar } from "expo-status-bar";
 import { getRandomColor } from "@/scripts/getRandomColor";
 import { useNavigation } from "@react-navigation/native";
+
+import * as WebBrowser from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+WebBrowser.maybeCompleteAuthSession();
 
 type FadeInViewProps = PropsWithChildren<{style: ViewStyle}>;
 
@@ -34,8 +40,15 @@ const FadeInView: React.FC<FadeInViewProps> = props => {
 
 export default function InitialScreen() {
   const navigation = useNavigation();
+
+  const [userInfo, setUserInfo] = React.useState(null);
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: "784595666289-j393omat5dag5d2oheodgp68pq13vb95.apps.googleusercontent.com",
+    iosClientId: "784595666289-ke8u41q9v0e80gevc34ms42281ga3fr1.apps.googleusercontent.com",
+    webClientId: "784595666289-5uh2750gd6t95nin7utvkpc8igu2k475.apps.googleusercontent.com"
+  });
+
   const { width, height } = useWindowDimensions();
-  
   const leftColor = useSharedValue('red');
   const rightColor = useSharedValue('black');
   
@@ -78,6 +91,8 @@ export default function InitialScreen() {
       </FadeInView>
 
       <View style={styles.buttonContainer}>
+        <Button title="Sign in with Google" onPress={(event) => promptAsync()}/>
+
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('LoginScreen' as never)}>
           <Text style={styles.text}>Log In</Text>
         </TouchableOpacity>

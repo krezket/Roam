@@ -8,7 +8,7 @@ import { getRandomColor } from "@/scripts/getRandomColor";
 export default function index() {
   const { width, height } = useWindowDimensions();
 
-  const leftColor = useSharedValue('white');
+  const leftColor = useSharedValue('red');
   // const middleColor = useSharedValue('red');
   const rightColor = useSharedValue('black');
 
@@ -24,30 +24,32 @@ export default function index() {
     const createContinuousTransition = (colorSharedValue: SharedValue<string>) => {
       const colorSequence = Array.from({ length: 100 }, getRandomColor);
       const colorAnimations = colorSequence.map(color =>
-        withTiming(color, { duration: 1000 })
+        withTiming(color, { duration: 3000 })
       );
-
       colorSharedValue.value = withSequence(...colorAnimations);
     };
-
     createContinuousTransition(leftColor);
     createContinuousTransition(rightColor);
   }, [leftColor, rightColor]);
 
 
   return (
-    <>
+    <View style={styles.container}>
       <StatusBar />
-      <Canvas style={{ flex: 1 }}>
+      <Canvas style={StyleSheet.absoluteFill}>
         <Rect x={0} y={0} width={width} height={height}>
           <LinearGradient
             start={vec(0, 0)}
             end={vec(width, height)}
             colors={colors}
-          />
+            />
         </Rect>
-      </Canvas>   
-    </>
+      </Canvas>
+      <View style={styles.textContainer}>
+        <Text style={styles.text}>Welcome to</Text>
+        <Image source={require('../assets/images/ROAM.png')} />
+      </View>   
+    </View>
   );
 };
 
@@ -56,5 +58,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     justifyContent: "center",
+  },
+  textContainer: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
+  },
+  text: {
+    color: 'black',
   },
 });

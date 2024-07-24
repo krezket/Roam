@@ -57,6 +57,7 @@ export default function index() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar />
+
       <Canvas style={StyleSheet.absoluteFillObject}>
         <Rect x={0} y={0} width={width} height={height}>
           <LinearGradient
@@ -66,10 +67,21 @@ export default function index() {
             />
         </Rect>
       </Canvas>
+
       <FadeInView style={styles.textContainer}>
-        <Text style={styles.text}>Welcome to</Text>
+        <Text>Welcome to</Text>
         <Image source={require('../assets/images/ROAM.png')} />
-      </FadeInView>   
+      </FadeInView>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <Text style={styles.text}>Log In</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <Text style={styles.text}>Sign Up</Text>
+        </TouchableOpacity>
+      </View>  
     </SafeAreaView>
   );
 };
@@ -82,10 +94,26 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     alignItems: "center",
-    flex: 1,
     justifyContent: "center",
+    position: "absolute",
   },
   text: {
+    fontFamily: 'times new roman',
     color: 'black',
+    fontSize: 20,
+  },
+  buttonContainer: {  
+    justifyContent: 'space-around',
+    marginTop: 400,
+    gap: 40,
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: 'gray',
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 90,
+    paddingRight: 90,
+    borderRadius: 2,
   },
 });

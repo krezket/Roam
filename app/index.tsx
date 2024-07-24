@@ -1,4 +1,3 @@
-// web 784595666289-5uh2750gd6t95nin7utvkpc8igu2k475.apps.googleusercontent.com
 import React, { useRef, useEffect } from "react";
 import { PropsWithChildren } from "react";
 import { Animated, Text, View, StyleSheet, Image, useWindowDimensions, TouchableOpacity, Platform } from "react-native";

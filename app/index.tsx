@@ -32,7 +32,7 @@ const FadeInView: React.FC<FadeInViewProps> = props => {
   );
 };
 
-export default function index() {
+export default function InitialScreen() {
   const navigation = useNavigation();
   const { width, height } = useWindowDimensions();
   
@@ -45,7 +45,7 @@ export default function index() {
   
   useEffect(() => {
     const createContinuousTransition = (colorSharedValue: SharedValue<string>) => {
-      const colorSequence = Array.from({ length: 150 }, getRandomColor);
+      const colorSequence = Array.from({ length: 250 }, getRandomColor);
       const colorAnimations = colorSequence.map(color =>
         withTiming(color, { duration: 4000 })
       );
@@ -76,11 +76,11 @@ export default function index() {
       </FadeInView>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => {}}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('LoginScreen')}>
           <Text style={styles.text}>Log In</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={() => {}}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SignupScreen')}>
           <Text style={styles.text}>Sign Up</Text>
         </TouchableOpacity>
       </View>  

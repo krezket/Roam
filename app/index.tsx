@@ -1,9 +1,10 @@
+// web 784595666289-5uh2750gd6t95nin7utvkpc8igu2k475.apps.googleusercontent.com
 import React, { useRef, useEffect } from "react";
 import { PropsWithChildren } from "react";
-import { Animated, Text, View, StyleSheet, Image, useWindowDimensions, TouchableOpacity } from "react-native";
+import { Animated, Text, View, StyleSheet, Image, useWindowDimensions, TouchableOpacity, Platform } from "react-native";
 import { ViewStyle } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Canvas, LinearGradient, Rect, vec } from "@shopify/react-native-skia";
+import { Canvas, LinearGradient, Rect, vec } from "@shopify/react-native-skia/src";
 import { useDerivedValue, useSharedValue, withTiming, withSequence, SharedValue } from "react-native-reanimated";
 import { StatusBar } from "expo-status-bar";
 import { getRandomColor } from "@/scripts/getRandomColor";
@@ -60,15 +61,17 @@ export default function InitialScreen() {
     <SafeAreaView style={styles.container}>
       <StatusBar />
 
-      <Canvas style={StyleSheet.absoluteFillObject}>
-        <Rect x={0} y={0} width={width} height={height}>
-          <LinearGradient
-            start={vec(0, 0)}
-            end={vec(width, height)}
-            colors={colors}
+      {Platform.OS !== 'web' && (
+        <Canvas style={StyleSheet.absoluteFillObject}>
+          <Rect x={0} y={0} width={width} height={height}>
+            <LinearGradient
+              start={vec(0, 0)}
+              end={vec(width, height)}
+              colors={colors}
             />
-        </Rect>
-      </Canvas>
+          </Rect>
+        </Canvas>
+      )}
 
       <FadeInView style={styles.textContainer}>
         <Text>Welcome to</Text>
@@ -76,11 +79,11 @@ export default function InitialScreen() {
       </FadeInView>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('LoginScreen')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('LoginScreen' as never)}>
           <Text style={styles.text}>Log In</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SignupScreen')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SignupScreen' as never)}>
           <Text style={styles.text}>Sign Up</Text>
         </TouchableOpacity>
       </View>  

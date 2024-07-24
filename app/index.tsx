@@ -76,7 +76,7 @@ export default function index() {
       </FadeInView>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('loginScreen')}>
+        <TouchableOpacity style={styles.button} onPress={() => {}}>
           <Text style={styles.text}>Log In</Text>
         </TouchableOpacity>
 

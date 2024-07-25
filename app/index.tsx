@@ -56,7 +56,7 @@ export default function InitialScreen() {
     console.log("user", user);
     if (!user) {
       if (response?.type === "success" && response.authentication) {
-        // setToken(response.authentication.accessToken);
+        setToken(response.authentication.accessToken);
         getUserInfo(response.authentication.accessToken);
       }
     } else {

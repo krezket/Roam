@@ -12,7 +12,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "env.d.ts",
+    ".env",
     "expo-env.d.ts"
 , "scripts/getRandomColor.js", "app/mocks/SkiaMock.js"  ]
 }

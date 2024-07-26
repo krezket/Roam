@@ -22,7 +22,7 @@ export default function GoogleAuth() {
   const [userInfo, setUserInfo] = useState<null | { name: string }>(null);
 
   const [request, response, promptAsync] = Google.useAuthRequest(config);
-  
+
   useEffect(() => {
     handleEffect();
   }, [response, token]);
@@ -64,7 +64,7 @@ export default function GoogleAuth() {
       // Add your own error handler here
     }
   };
-  
+
   return (
     <View style={styles.container}>
       {!userInfo ? (
@@ -75,7 +75,12 @@ export default function GoogleAuth() {
           <Text>Not logged in</Text>
         </View>
       ) : (
-        <Text>{JSON.stringify(userInfo, null, 2)}</Text>
+        <View>
+          <Text>{JSON.stringify(userInfo, null, 2)}</Text>
+          <Pressable style={styles.button} onPress={() => AsyncStorage.removeItem('@user')}>
+            <Text style={styles.text}>Log Out</Text>
+          </Pressable>
+        </View>
       )}
     </View>
   )

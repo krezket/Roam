@@ -73,8 +73,8 @@ export default function InitialScreen() {
 
       <FadeInView style={styles.textContainer}>
         <Text>Welcome to</Text>
-        <Image source={require('../assets/images/ROAM.png')} style={styles.image} />
-        <Text>{JSON.stringify(userInfo,null,2)}</Text>
+        <Image source={require('../assets/images/ROAMDM.png')} style={styles.image} />
+        {/* <Text>{JSON.stringify(userInfo,null,2)}</Text> */}
       </FadeInView>
 
       <View style={styles.buttonContainer}>
@@ -110,21 +110,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   image: {
-    marginBottom: 20,
+    // marginBottom: 20,
   },
   textContainer: {
+    flex: 2,
     alignItems: "center",
     justifyContent: "center",
-    position: "absolute",
+    // borderWidth: 1,
+    // position: "absolute",
+  },
+  buttonContainer: {  
+    flex: 1,
+    gap: 20,
+    // justifyContent: 'space-around',
+    // borderWidth: 1,
   },
   text: {
     color: 'white',
     fontSize: 20,
-  },
-  buttonContainer: {  
-    justifyContent: 'space-around',
-    marginTop: 400,
-    gap: 30,
   },
   button: {
     alignItems: 'center',

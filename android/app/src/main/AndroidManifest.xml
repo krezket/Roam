@@ -27,6 +27,7 @@
         <data android:scheme="myapp"/>
         <data android:scheme="com.anthonyguerrero.Roam"/>
         <data android:scheme="com.anonymous.Roam"/>
+        <data android:scheme="Roam"/>
       </intent-filter>
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" android:exported="false"/>

@@ -3,22 +3,26 @@ import * as Google from "expo-auth-session/providers/google";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { View, Text, StyleSheet, Pressable } from 'react-native'
+
+import { IOS_CLIENT_ID, ANDROID_CLIENT_ID, WEB_CLIENT_ID } from '@env';
 
 WebBrowser.maybeCompleteAuthSession();
 
-import { View, Text, StyleSheet, Pressable } from 'react-native'
 
 export default function GoogleAuth() {
   const navigation = useNavigation();
+
+  const config = {
+    iosClientId: IOS_CLIENT_ID,
+    androidClientId: ANDROID_CLIENT_ID,
+    webClientId: WEB_CLIENT_ID,
+  }
   const [token, setToken] = useState('');
   const [userInfo, setUserInfo] = useState<null | { name: string }>(null);
 
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    iosClientId: '',
-    androidClientId: '',
-    webClientId: '',
-  });
-
+  const [request, response, promptAsync] = Google.useAuthRequest(config);
+  
   useEffect(() => {
     handleEffect();
   }, [response, token]);
@@ -60,11 +64,12 @@ export default function GoogleAuth() {
       // Add your own error handler here
     }
   };
+  
   return (
     <View style={styles.container}>
       {!userInfo ? (
         <View style={styles.textContainer}>
-          <Pressable style={styles.button} onPress={() => {navigation.navigate}}>
+          <Pressable style={styles.button} onPress={() => promptAsync()}>
             <Text style={styles.text}>Log in</Text>
           </Pressable>
           <Text>Not logged in</Text>

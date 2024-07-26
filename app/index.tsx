@@ -34,7 +34,6 @@ export default function InitialScreen() {
   const navigation = useNavigation();
   const [userInfo, setUserInfo] = useState<null | { name: string }>(null);
 
-
   const { width, height } = useWindowDimensions();
   const leftColor = useSharedValue('red');
   const rightColor = useSharedValue('black');
@@ -46,14 +45,14 @@ export default function InitialScreen() {
   
   useEffect(() => {
     const createContinuousTransition = (colorSharedValue: SharedValue<string>) => {
-      const colorSequence = Array.from({ length: 250 }, getRandomColor);
-      const colorAnimations = colorSequence.map(color =>
+    const colorSequence = Array.from({ length: 250 }, getRandomColor);
+    const colorAnimations = colorSequence.map(color =>
         withTiming(color, { duration: 4000 })
       );
       colorSharedValue.value = withSequence(...colorAnimations);
     };
     createContinuousTransition(leftColor);
-    createContinuousTransition(rightColor);
+    // createContinuousTransition(rightColor);
   }, [leftColor, rightColor]);
 
   return (
@@ -74,19 +73,22 @@ export default function InitialScreen() {
 
       <FadeInView style={styles.textContainer}>
         <Text>Welcome to</Text>
-        <Image source={require('../assets/images/ROAM.png')} />
+        <Image source={require('../assets/images/ROAM.png')} style={styles.image} />
         <Text>{JSON.stringify(userInfo,null,2)}</Text>
       </FadeInView>
 
       <View style={styles.buttonContainer}>
-        <Pressable style={styles.button} onPress={() => navigation.navigate('GoogleAuth' as never)}>
-          <Text style={styles.text}>Go to Practice Screen</Text>
+        <Pressable style={styles.button} onPress={() => navigation.navigate('SignupScreen' as never)}>
+          <Text style={styles.text}>Sign up with email</Text>
         </Pressable>
 
         <Pressable style={styles.button} onPress={() => navigation.navigate('LoginScreen' as never)}>
           <Text style={styles.text}>Log In</Text>
         </Pressable>
 
+        <Pressable style={styles.button} onPress={() => navigation.navigate('GoogleAuth' as never)}>
+          <Text style={styles.text}>Go to Practice Screen</Text>
+        </Pressable>
       </View>  
       </>
       :
@@ -107,27 +109,32 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
+  image: {
+    marginBottom: 20,
+  },
   textContainer: {
     alignItems: "center",
     justifyContent: "center",
     position: "absolute",
   },
   text: {
-    fontFamily: 'SpaceMono_400Regular',
-    color: 'black',
+    color: 'white',
     fontSize: 20,
   },
   buttonContainer: {  
     justifyContent: 'space-around',
     marginTop: 400,
-    gap: 40,
+    gap: 30,
   },
   button: {
     alignItems: 'center',
-    backgroundColor: 'gray',
+    borderWidth: 1,
+    borderStyle: 'dashed',
+    borderColor: 'white',
+    backgroundColor: 'transparent',
     borderRadius: 2,
-    paddingTop: 5,
-    paddingBottom: 5,
+    paddingTop: 7,
+    paddingBottom: 7,
     paddingLeft: 90,
     paddingRight: 90,
   },

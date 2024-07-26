@@ -7,12 +7,6 @@ import { useDerivedValue, useSharedValue, withTiming, withSequence, SharedValue 
 import { getRandomColor } from "@/scripts/getRandomColor";
 import { useNavigation } from "@react-navigation/native";
 
-import * as WebBrowser from "expo-web-browser";
-import * as Google from "expo-auth-session/providers/google";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { IOS_CLIENT_ID, ANDROID_CLIENT_ID, WEB_CLIENT_ID } from '@env';
-WebBrowser.maybeCompleteAuthSession();
-
 type FadeInViewProps = PropsWithChildren<{style: ViewStyle}>;
 
 const FadeInView: React.FC<FadeInViewProps> = props => {
@@ -38,56 +32,8 @@ const FadeInView: React.FC<FadeInViewProps> = props => {
 
 export default function InitialScreen() {
   const navigation = useNavigation();
-  const [token, setToken] = useState('');
   const [userInfo, setUserInfo] = useState<null | { name: string }>(null);
 
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    iosClientId: IOS_CLIENT_ID,
-    androidClientId: ANDROID_CLIENT_ID,
-    webClientId: WEB_CLIENT_ID,
-  });
-
-  useEffect(() => {
-    handleEffect();
-  }, [response, token]);
-
-  async function handleEffect() {
-    const user = await getLocalUser();
-    console.log("user", user);
-    if (!user) {
-      if (response?.type === "success" && response.authentication) {
-        setToken(response.authentication.accessToken);
-        getUserInfo(response.authentication.accessToken);
-      }
-    } else {
-      setUserInfo(user);
-      console.log("loaded locally");
-    }
-  }
-
-  const getLocalUser = async () => {
-    const data = await AsyncStorage.getItem("@user");
-    if (!data) return null;
-    return JSON.parse(data);
-  };
-
-  const getUserInfo = async (token: string) => {
-    if (!token) return;
-    try {
-      const response = await fetch(
-        "https://www.googleapis.com/userinfo/v2/me",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      const user = await response.json();
-      await AsyncStorage.setItem("@user", JSON.stringify(user));
-      setUserInfo(user);
-    } catch (error) {
-      // Add your own error handler here
-    }
-  };
 
   const { width, height } = useWindowDimensions();
   const leftColor = useSharedValue('red');
@@ -133,17 +79,14 @@ export default function InitialScreen() {
       </FadeInView>
 
       <View style={styles.buttonContainer}>
-        <Pressable onPress={() => promptAsync()}>
-          <Text>Sign in with Google</Text>
+        <Pressable style={styles.button} onPress={() => navigation.navigate('GoogleAuth' as never)}>
+          <Text style={styles.text}>Go to Practice Screen</Text>
         </Pressable>
 
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('LoginScreen' as never)}>
+        <Pressable style={styles.button} onPress={() => navigation.navigate('LoginScreen' as never)}>
           <Text style={styles.text}>Log In</Text>
-        </TouchableOpacity>
+        </Pressable>
 
-        <TouchableOpacity style={styles.button} onPress={() => AsyncStorage.removeItem('@user')}>
-          <Text style={styles.text}>Sign Up</Text>
-        </TouchableOpacity>
       </View>  
       </>
       :
@@ -151,10 +94,6 @@ export default function InitialScreen() {
       <View style={styles.textContainer}>
         <Text>Welcome back, {userInfo.name}!</Text>
         <Text>{JSON.stringify(userInfo, null, 2)}</Text>
-
-        <TouchableOpacity style={styles.button} onPress={() => AsyncStorage.removeItem('@user')}>
-          <Text style={styles.text}>Log Out</Text>
-        </TouchableOpacity>
       </View>
       </>
       }
@@ -174,7 +113,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   text: {
-    fontFamily: 'times new roman',
+    fontFamily: 'SpaceMono_400Regular',
     color: 'black',
     fontSize: 20,
   },

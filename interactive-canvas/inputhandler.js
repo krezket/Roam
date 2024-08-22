@@ -1,9 +1,6 @@
 <!-- UP -->
     addEventListener("keydown", function(e) {
-        if (e.keyCode == '38') {
-            console.log("moving up")
-            vy = -3;
-        }
+        if (e.keyCode == '38') vy = -3;
     });
 addEventListener("keyup", function(e) {
     if (e.keyCode == '38') vy = 0;
@@ -32,3 +29,4 @@ addEventListener("keyup", function(e) {
 addEventListener("keyup", function(e) {
     if (e.keyCode == '37') vx = 0;
 });
+

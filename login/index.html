@@ -4,7 +4,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Roam</title>
-        <link rel="stylesheet" href="reset.css">
+        <link rel="stylesheet" href="../reset.css">
+        <link rel="stylesheet" href="../style.css">
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
@@ -12,14 +13,22 @@
             <header>
                 <h1>Roam</h1>
                 <nav>
-                    <a href="login/">Log In</a>
+                    <a>Log In</a>
                     <a>Sign Up</a>
                 </nav>
             </header>
-            <section> 
+            <section class="login-screen">
+                <form>
+                    <label>Username:</label><br>
+                    <input type="text" placeholder="username"/><br>
+                    <label>Password:</label><br>
+                    <input type="text" placeholder="password"/>                                                                
+                </form>
             </section>
         </main>
         <script src="script.js"></script>
         <script src="./utils/App.js"></script>
     </body>
 </html>
+
+

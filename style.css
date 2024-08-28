@@ -1,18 +1,39 @@
 header {
     display: flex;
+    flex-direction: column;
+    position: absolute;
+    justify-content: space-between;
+    width: 100vw;
+}
+
+header h1 {
+    font-size: 3rem;
+}
+
+.title-nav {
+    display: flex;
     justify-content: space-between;
 }
 
 nav {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 20%;
 }
 
-form {
+section {
+    padding: 1%;
+}
+
+.cards {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: left;
+    padding-top: 90px;
+    gap: 2rem;
+}
+ .card h1 {
+    font-size: 2rem;
+    width: 8rem;
+    height: 10rem;
+    border: 1px dashed black;
 }
